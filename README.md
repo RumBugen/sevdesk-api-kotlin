@@ -198,4 +198,4 @@ This is a simple SevDesk Rest API Client for Kotlin.
 - [ ] [Retrieve tag relations](https://api.sevdesk.de/#tag/Tag/operation/getTagRelations)
 
 ## Other
-- [x] [Get Static Countrys](https://my.sevdesk.de/api/v1/StaticCountry)
+- [x] [Get Static Countries](https://my.sevdesk.de/api/v1/StaticCountry)
