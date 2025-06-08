@@ -16,8 +16,6 @@ class TestCheckAccountTransactionRequests {
         val items = mutableListOf<Int>()
 
         for (account in checkAccountTransactionRequest.retrieveTransactionsWithoutPagination()) {
-            println(Json.encodeToJsonElement(CheckAccountTransactionSerializer(), account))
-
             assert(!items.contains(account.id))
             items.add(account.id)
         }

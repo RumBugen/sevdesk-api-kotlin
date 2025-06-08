@@ -18,8 +18,6 @@ class TestCheckAccountRequests {
         val items = mutableListOf<Int>()
 
         for (account in checkAccountRequest.retrieveCheckAccountsWithoutPagination()) {
-            println(Json.encodeToJsonElement(CheckAccountSerializer(), account))
-
             assert(!items.contains(account.id)) { "Item must not contain the same id" }
             items.add(account.id)
         }
