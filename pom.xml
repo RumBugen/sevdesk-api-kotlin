@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.rumbugen</groupId>
-    <artifactId>sevdesk-api</artifactId>
+    <artifactId>sevdesk-api-kotlin</artifactId>
     <version>1.0.0</version>
 
     <url>https://github.com/RumBugen/sevdesk-api-kotlin</url>
