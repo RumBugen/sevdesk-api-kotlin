@@ -571,7 +571,7 @@ class ContactRequests internal constructor(private var sevDeskAPI: SevDeskAPI) {
                         parentId?.let {
                             put("parent", buildJsonObject {
                                 put("id", parentId)
-                                put("objectId", "Contact")
+                                put("objectName", "Contact")
                             })
                         }
                         put("customerNumber", customerNumber)
