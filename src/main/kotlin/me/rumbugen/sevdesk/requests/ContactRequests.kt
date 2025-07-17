@@ -531,7 +531,7 @@ class ContactRequests internal constructor(private var sevDeskAPI: SevDeskAPI) {
      * @return The created [Contact] object, or null if the creation failed.
      */
     suspend fun createContact(
-        name: String,
+        name: String? = null,
         categoryId: Int,
         status: Contact.Status? = null,
         parentId: Int? = null,
