@@ -64,7 +64,7 @@ class BasicRequests internal constructor(private var sevDeskAPI: SevDeskAPI) {
      * @return A `StaticCountry` object that matches the provided locale, or null if no match is found.
      */
     suspend fun retrieveCountryList(lang: Locale): StaticCountry? {
-        return retrieveCountryList().first { it.getLocale() == lang }
+        return retrieveCountryList().first { it.getLocale()?.country == lang.country }
     }
 
     /**

@@ -67,7 +67,7 @@ class TestContactAddressRequests {
         suspend fun createTestContactAddress(): ContactAddress {
             val contact: Contact = createTestContact()
 
-            val country: StaticCountry? = sevDeskAPI.basicsRequest().retrieveCountryList(Locale.GERMAN)
+            val country: StaticCountry? = sevDeskAPI.basicsRequest().retrieveCountryList(Locale.GERMANY)
             assertNotNull(country)
 
             val categories: List<Category> =
