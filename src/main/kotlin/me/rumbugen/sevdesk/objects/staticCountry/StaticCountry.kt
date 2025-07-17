@@ -11,6 +11,6 @@ data class StaticCountry(
     var translationCode: String? = null,
 ): SevDeskObject(id) {
     fun getLocale(): Locale {
-        return Locale(code)
+        return Locale.Builder().setRegion(code).build()
     }
 }
