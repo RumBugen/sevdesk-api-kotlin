@@ -13,7 +13,29 @@ class InvoicePage(
     override val items: List<Invoice>,
     override val limit: Int,
     override val offset: Int,
-    override val total: Int?
+    override val total: Int?,
+
+    val partiallyPaid: Boolean? = null,
+    val orderByDebit: Boolean? = null,
+    val orderByDueTime: Boolean? = null,
+    val showAll: Boolean? = null,
+    val invoiceNumber: String? = null,
+    val delinquent: Boolean? = null,
+    val notdelinquent: Boolean? = null,
+    val status: Invoice.Status? = null,
+    val createBefore: Long? = null,
+    val createAfter: Long? = null,
+    val updateBefore: Long? = null,
+    val updateAfter: Long? = null,
+    val contactId: Int? = null,
+    val orderByDueDate: String? = null,
+    val day: Long? = null,
+    val startDate: Long? = null,
+    val endDate: Long? = null,
+    val header: String? = null,
+    val onlyDunned: Boolean? = null,
+    val showWkr: Boolean? = null,
+    val showMa: Boolean? = null,
 ) : Page<Invoice>(items, limit, offset, total) {
     override suspend fun next(): Page<Invoice> {
         require(hasNext()) { "No next page available" }
@@ -42,7 +64,29 @@ class InvoicePage(
             items = checkAccounts.first,
             limit = limit,
             offset = newOffset,
-            total = checkAccounts.second!!
+            total = checkAccounts.second!!,
+
+            partiallyPaid = partiallyPaid,
+            orderByDebit = orderByDebit,
+            orderByDueTime = orderByDueTime,
+            showAll = showAll,
+            invoiceNumber = invoiceNumber,
+            delinquent = delinquent,
+            notdelinquent = notdelinquent,
+            status = status,
+            createBefore = createBefore,
+            createAfter = createAfter,
+            updateBefore = updateBefore,
+            updateAfter = updateAfter,
+            contactId = contactId,
+            orderByDueDate = orderByDueDate,
+            day = day,
+            startDate = startDate,
+            endDate = endDate,
+            header = header,
+            onlyDunned = onlyDunned,
+            showWkr = showWkr,
+            showMa = showMa
         )
     }
 }
