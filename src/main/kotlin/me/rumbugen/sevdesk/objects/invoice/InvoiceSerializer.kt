@@ -149,7 +149,7 @@ object InvoiceSerializer : KSerializer<Invoice> {
             customerInternalNote = jsonObject["customerInternalNote"]?.jsonPrimitive?.content,
             showNet = jsonObject["showNet"]?.jsonPrimitive?.int?.toBoolean(),
             enshrined = jsonObject["enshrined"]?.toOffsetDateTime(),
-            sendType = jsonObject["sendType"]?.jsonPrimitive?.content?.let {
+            sendType = jsonObject["sendType"]?.jsonPrimitive?.contentOrNull?.let {
                 Invoice.SendType.valueOf(it)
             },
             deliveryDateUntil = jsonObject["deliveryDateUntil"]?.jsonPrimitive?.content
