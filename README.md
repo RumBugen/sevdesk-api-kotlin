@@ -117,7 +117,7 @@ This is a simple SevDesk Rest API Client for Kotlin.
 ## Invoice
 - [x] [Retrieve invoices](https://api.sevdesk.de/#tag/Invoice/operation/getInvoices)
 - [ ] [Create a new invoice](https://api.sevdesk.de/#tag/Invoice/operation/createInvoiceByFactory)
-- [ ] [Find invoice by ID](https://api.sevdesk.de/#tag/Invoice/operation/getInvoiceById)
+- [x] [Find invoice by ID](https://api.sevdesk.de/#tag/Invoice/operation/getInvoiceById)
 - [ ] [Find invoice positions](https://api.sevdesk.de/#tag/Invoice/operation/getInvoicePositionsById)
 - [ ] [Create invoice from order](https://api.sevdesk.de/#tag/Invoice/operation/createInvoiceFromOrder)
 - [ ] [Create invoice reminder](https://api.sevdesk.de/#tag/Invoice/operation/createInvoiceReminder)
