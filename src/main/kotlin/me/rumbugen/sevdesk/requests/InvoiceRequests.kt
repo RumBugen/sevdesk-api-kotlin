@@ -1,6 +1,5 @@
 package me.rumbugen.sevdesk.requests
 
-import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.put
@@ -10,10 +9,8 @@ import kotlinx.serialization.json.jsonPrimitive
 import me.rumbugen.sevdesk.SevDeskAPI
 import me.rumbugen.sevdesk.Util
 import me.rumbugen.sevdesk.objects.Page
-import me.rumbugen.sevdesk.objects.SevQuery
-import me.rumbugen.sevdesk.objects.contact.customField.ContactCustomField
-import me.rumbugen.sevdesk.objects.contact.customField.ContactCustomFieldPage
-import me.rumbugen.sevdesk.objects.contact.customField.ContactCustomFieldSerializer
+import me.rumbugen.sevdesk.objects.contact.Contact
+import me.rumbugen.sevdesk.objects.contact.ContactSerializer
 import me.rumbugen.sevdesk.objects.invoice.Invoice
 import me.rumbugen.sevdesk.objects.invoice.InvoicePage
 import me.rumbugen.sevdesk.objects.invoice.InvoiceSerializer
@@ -339,6 +336,28 @@ class InvoiceRequests internal constructor(private var sevDeskAPI: SevDeskAPI) {
             onlyDunned = onlyDunned,
             showWkr = showWkr,
             showMa = showMa
+        )
+    }
+
+    /**
+     * Find invoice by ID
+     *
+     * Returns a single invoice
+     *
+     * @param invoiceId ID of invoice to return
+     *
+     * @return The [Invoice] object if found, otherwise null.
+     */
+    suspend fun findInvoiceById(
+        invoiceId: Int,
+    ): Invoice? {
+        return sevDeskAPI.requestWithHandling(
+            {
+                sevDeskAPI.client.get("Invoice/${invoiceId}")
+            },
+            {
+                Util.getObjectList(it, InvoiceSerializer).getOrNull(0)
+            }
         )
     }
 

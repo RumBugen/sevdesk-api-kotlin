@@ -28,6 +28,16 @@ class TestInvoiceRequests {
     }
 
     @Test
+    fun testFindInvoiceById() = runBlocking {
+        val pagination: Page<Invoice> =
+            invoiceRequests.retrieveInvoicesWithPagination(perPage = 1)
+        assert(pagination.items.size == 1)
+
+        val invoice: Invoice? = invoiceRequests.findInvoiceById(pagination.items[0].id)
+        assert(invoice?.id == pagination.items[0].id)
+    }
+
+    @Test
     fun retrievePDFDocumentInvoice() = runBlocking {
         val invoices: List<Invoice> =
             invoiceRequests.retrieveInvoicesWithoutPagination(limit = 1)
