@@ -129,7 +129,7 @@ This is a simple SevDesk Rest API Client for Kotlin.
 - [ ] [Retrieve XML of an e-invoice](https://api.sevdesk.de/#tag/Invoice/operation/invoiceGetXml)
 - [x] [Mark invoice as sent](https://api.sevdesk.de/#tag/Invoice/operation/invoiceSendBy)
 - [ ] [Enshrine](https://api.sevdesk.de/#tag/Invoice/operation/invoiceEnshrine)
-- [ ] [Book an invoice](https://api.sevdesk.de/#tag/Invoice/operation/bookInvoice)
+- [x] [Book an invoice](https://api.sevdesk.de/#tag/Invoice/operation/bookInvoice)
 - [ ] [Reset status to open](https://api.sevdesk.de/#tag/Invoice/operation/invoiceResetToOpen)
 - [ ] [Reset status to draft](https://api.sevdesk.de/#tag/Invoice/operation/invoiceResetToDraft)
 

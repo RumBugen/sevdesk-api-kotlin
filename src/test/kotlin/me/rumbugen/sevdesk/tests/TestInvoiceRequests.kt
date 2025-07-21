@@ -3,12 +3,16 @@ package me.rumbugen.sevdesk.tests
 import kotlinx.coroutines.runBlocking
 import me.rumbugen.sevdesk.objects.Page
 import me.rumbugen.sevdesk.objects.basic.BookingVersion
+import me.rumbugen.sevdesk.objects.checkAccount.CheckAccount
 import me.rumbugen.sevdesk.objects.communicationWay.CommunicationWay
+import me.rumbugen.sevdesk.objects.invoice.BookingType
 import me.rumbugen.sevdesk.objects.invoice.Invoice
+import me.rumbugen.sevdesk.objects.invoice.InvoiceChangedLogEntry
 import me.rumbugen.sevdesk.objects.sevDeskFile.SevDeskFile
 import me.rumbugen.sevdesk.requests.InvoiceRequests
 import me.rumbugen.sevdesk.tests.TestObjects.testSevDeskFile
 import org.junit.jupiter.api.Test
+import java.time.OffsetDateTime
 import kotlin.test.assertNotNull
 
 class TestInvoiceRequests {

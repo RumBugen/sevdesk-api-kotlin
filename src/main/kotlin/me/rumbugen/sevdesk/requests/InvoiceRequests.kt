@@ -4,18 +4,31 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.put
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.put
 import me.rumbugen.sevdesk.SevDeskAPI
 import me.rumbugen.sevdesk.Util
+import me.rumbugen.sevdesk.Util.putSerializedIfExists
+import me.rumbugen.sevdesk.Util.setJSONObjectBody
 import me.rumbugen.sevdesk.objects.Page
+import me.rumbugen.sevdesk.objects.checkAccount.CheckAccount
+import me.rumbugen.sevdesk.objects.checkAccount.CheckAccountSerializer
+import me.rumbugen.sevdesk.objects.checkAccount.transaction.CheckAccountTransaction
+import me.rumbugen.sevdesk.objects.checkAccount.transaction.CheckAccountTransactionSerializer
 import me.rumbugen.sevdesk.objects.contact.Contact
 import me.rumbugen.sevdesk.objects.contact.ContactSerializer
+import me.rumbugen.sevdesk.objects.invoice.BookingType
 import me.rumbugen.sevdesk.objects.invoice.Invoice
+import me.rumbugen.sevdesk.objects.invoice.InvoiceChangedLogEntry
+import me.rumbugen.sevdesk.objects.invoice.InvoiceChangedLogEntrySerializer
 import me.rumbugen.sevdesk.objects.invoice.InvoicePage
 import me.rumbugen.sevdesk.objects.invoice.InvoiceSerializer
 import me.rumbugen.sevdesk.objects.sevDeskFile.SevDeskFile
 import me.rumbugen.sevdesk.objects.sevDeskFile.SevDeskFileSerializer
+import java.time.OffsetDateTime
 
 /**
  *
@@ -384,6 +397,17 @@ class InvoiceRequests internal constructor(private var sevDeskAPI: SevDeskAPI) {
             })
     }
 
+    /**
+     * Mark invoice as sent
+     *
+     * Marks an invoice as sent by a chosen send type.
+     *
+     * @param invoiceId ID of invoice to mark as sent
+     * @param sendType Specifies the way in which the invoice was sent to the customer.
+     * Accepts 'VPR' (print), 'VP' (postal), 'VM' (mail) and 'VPDF' (downloaded pfd).
+     * @param sendDraft To create a draft of an invoice for internal use. This operation will not alter the status of the invoice or create bookings for reports.
+     *
+     */
     suspend fun markInvoiceAsSent(
         invoiceId: Int,
         sendType: Invoice.SendType,
@@ -399,5 +423,41 @@ class InvoiceRequests internal constructor(private var sevDeskAPI: SevDeskAPI) {
             {
                 return@requestWithHandling Json.decodeFromJsonElement(InvoiceSerializer, it["objects"]!!)
             })
+    }
+
+    /**
+     * Book an invoice
+     *
+     * Booking the invoice with a transaction is probably the most important part in the bookkeeping process.
+     * There are several ways on correctly booking an invoice, all by using the same endpoint.
+     */
+    suspend fun bookInvoice(
+        invoiceId: Int,
+        amount: Float,
+        date: OffsetDateTime,
+        type: BookingType,
+        checkAccount: CheckAccount,
+        checkAccountTransaction: CheckAccountTransaction? = null,
+        createFeed: Boolean? = null,
+    ): InvoiceChangedLogEntry? {
+        return sevDeskAPI.requestWithHandling(
+            {
+                sevDeskAPI.client.put("Invoice/$invoiceId/bookAmount") {
+                    setJSONObjectBody(buildJsonObject {
+                        put("amount", amount)
+                        put("date", date.toString())
+                        put("type", type.toString())
+                        putSerializedIfExists("checkAccount", CheckAccountSerializer(), checkAccount)
+                        checkAccountTransaction?.let {
+                            putSerializedIfExists("checkAccountTransaction", CheckAccountTransactionSerializer(), checkAccountTransaction)
+                        }
+                        put("createFeed", createFeed)
+                    })
+                }
+            },
+            {
+                return@requestWithHandling Json.decodeFromJsonElement(InvoiceChangedLogEntrySerializer, it["objects"]!!)
+            }
+        )
     }
 }
